@@ -36,7 +36,7 @@ To check more arguments, you can use `python train_model.py --help`
 ### Train Early Exit Neural Network
 An example to train a ResNet model on CIFAR 10 with early exit, you can use the following command:
 ```bash
-python train_eenn.py --dataset cifar --num_classes 10 --test_split test --model resnet50 --ee 3 5 7 9 11 13 15 17 19 --pretrained <path_to_pretrained_regular_model> --epoch 10 --cuda --verbose
+python train_model.py --dataset cifar --num_classes 10 --test_split test --model resnet50 --ee 3 5 7 9 11 13 15 17 19 --pretrained <path_to_pretrained_regular_model> --epoch 10 --cuda --verbose
 ```
 
 Two examples to use the trained model for inference are provided in `example.py`.
