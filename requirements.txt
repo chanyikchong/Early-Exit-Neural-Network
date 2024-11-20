@@ -1,0 +1,18 @@
+appdirs
+fsspec==2023.9.0
+tqdm
+
+numpy==1.25.2
+pandas==2.2.0
+timm
+
+# torch
+torch==2.0.1
+torchvision==0.15.2
+torchaudio==2.0.2
+
+#dataset
+pillow==10.0.0
+datasets==2.14.4
+huggingface_hub==0.16.4
+opencv-python==4.9.0.80
