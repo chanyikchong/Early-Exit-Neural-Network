@@ -18,7 +18,7 @@ The custom model should have following properties before building the correspond
 
 Here is an example to define your own model:
 ```python
-for EENN.src.nn.model.base_model import BaseModel
+from src.nn.model.base_model import BaseModel
 
 class YourModel(BaseModel):
     def __init__(self, *args, **kwargs):
