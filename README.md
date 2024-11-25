@@ -1,17 +1,43 @@
 # Early Exit Neural Network
 
+## Introduction
+This repository provides an implementation of Early Exit Neural Network. The code is based on PyTorch and provides a way to train a regular CNN model and an Early Exit Neural Network. The code also provides a way to profile the processing time of the model.
+
+### What is Early Exit Neural Network?
+Early Exit Neural Networks are an innovative approach to optimize deep learning models, particularly in resource-constrained environments such as edge devices. These networks are designed with intermediate exit points that allow predictions to be made without traversing the entire model, reducing computation time and energy consumption. 
+![Early Exit Neural Network](source/imgs/EENN.png)
+
+More details about Early Exit Neural Network can be found in this [paper](https://ieeexplore.ieee.org/abstract/document/7900006)
+
+### Why use Early Exit Neural Networks?
+- ***Energy Efficiency***: Reduces energy consumption, making it suitable for energy-constrained environments.
+- ***Real-Time Applications***: Improves response time for applications like video processing, real-time monitoring, and autonomous systems.
+- ***Cost-Effective***: Decreases the operational cost of deploying AI systems by utilizing less computational power.
+- ***Prevent Overthinking***: Prevents the model from overthinking and making wrong predictions by allowing early exits.
+- ***Flexibility***: Provides flexibility by choosing the appropriate exit thresholds based on the application requirements.
+
+### Comparing Early Exit Neural Network with Regular CNN
+The table below demonstrates the performance of the Early Exit Neural Network (EENN) on CIFAR-10 and ImageNet-1k datasets running with ***AMD Ryzen 7 PRO 3700 8-Core Processor***. Metrics include accuracy, inference time, and energy consumption for models with and without early exits.
+
+| Dataset      | Model Type     | Accuracy (%) | Inference Time (ms/sample) | 
+|--------------|----------------|--------------|----------------------------|
+| CIFAR-10     | ResNet50       | 94.65        | 30.0                       |
+| CIFAR-10     | EENN-ResNet50  | 91.03        | 14.8                       |
+| ImageNet-1k  | ResNet101      | 81.95        | 96.0                       |
+| ImageNet-1k  | EENN-ResNet101 | 79.27        | 51.7                       |
+
 ## Requirements
-- Python 3.9+
+- Python 3.8+
 - install required packages by `pip install -r requirements.txt`
 
 ## Usage
-Support models
+Implemented backbones
 - ResNet (50, 101)
 - VGG (11, 13, 16, 19)
 
-You can defined your own model with the `BaseModel` class in `src/nn/model/base_model.py`. 
+You can implement your own model with the `BaseModel` class in `src/nn/model/base_model.py`. 
 
-The custom model should have following properties before building the corresponding Early Exit Neural Network:
+The custom model should have the following properties before building the corresponding Early Exit Neural Network:
 - `self.backbone`: The backbone layers of the model
 - `self.classifier_module`: The classifier module of the model. Default is `ClassifierHead` in `src/nn/model/classifier.py`
 - `self.classifier_config`: The input arguments for initialize the classifier module
@@ -26,7 +52,7 @@ class YourModel(BaseModel):
         # Define your model here
 ```
 
-### Train regular model
+### Train regular CNN model
 An example to train a ResNet model on CIFAR 10, you can use the following command:
 ```bash
 python train_model.py --dataset cifar --num_classes 10 --test_split test --model resnet50 --epoch 10 --cuda --verbose
@@ -52,3 +78,8 @@ The result will be saved in `<save_folder/profile_summary.json>`
 
 - `profile_summary['backbone_execution_time']['layer_name']`: processing time of each layer in backbone.
 - `profile_summary['gate_execution_time']['layer_name']`: processing time of layers in each gate.
+
+### Citation This Repository
+If you find this repository useful, please consider citing it:
+```
+```

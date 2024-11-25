@@ -90,15 +90,18 @@ class EpochEvalMetric:
         self.sample_count += n_samples
         self.loss_cumulate += loss.detach().cpu().numpy() * n_samples
 
-        output = output.detach().cpu()
-        target = target.cpu()
-        if output.dim() == 2:
-            output = output.unsqueeze(dim=-1)
+        if isinstance(output, torch.Tensor):
+            output = output.detach().cpu()
+            target = target.cpu()
+            if output.dim() == 2:
+                output = output.unsqueeze(dim=-1)
 
-        if target.dim() == 1:
-            target = target.unsqueeze(dim=-1)
+            if target.dim() == 1:
+                target = target.unsqueeze(dim=-1)
 
-        output_pred = torch.argmax(output, dim=1)
+            output_pred = torch.argmax(output, dim=1)
+        else:
+            output_pred = torch.tensor([[output]])
         acc = torch.eq(target, output_pred).sum(dim=0)
         best_possible = torch.eq(target, output_pred).max(dim=1)[0].sum(dim=0)
         if self.acc_cumulate is None:
