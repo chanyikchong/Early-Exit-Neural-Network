@@ -81,5 +81,14 @@ The result will be saved in `<save_folder/profile_summary.json>`
 
 ### Citation This Repository
 If you find this repository useful, please consider citing it:
-```
+```bibtex
+@inproceedings{Chen2025CEED,
+  author    = {Yichong Chen and Zifeng Niu and Manuel Roveri and Giuliano Casale},
+  title     = {{CEED: Collaborative Early Exit Neural Network Inference at the Edge}},
+  booktitle = {Proceedings of the IEEE International Conference on Computer Communications (INFOCOM)},
+  year      = {2025},
+  month     = {May},
+  pages     = {TBD},  % Update with actual page numbers when available
+  doi       = {TBD},  % Update with DOI when available
+}
 ```
