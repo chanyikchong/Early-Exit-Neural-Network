@@ -42,13 +42,13 @@ HUGGINGFACE_CACHE_TOKEN = os.path.join(os.path.expanduser('~'), '.cache', 'huggi
 def huggingface_login(huggingface_token=None):
     if not os.path.exists(HUGGINGFACE_CACHE_TOKEN):
         if huggingface_token is None:
-            raise ValueError("Please provide a huggingface token. You can get a token by running `huggingface-cli login`")
+            raise ValueError("Please provide a huggingface token and save it in `~/.cache/huggingface/token`. You can get a token by running `huggingface-cli login`")
         huggingface_hub.login(huggingface_token)
     else:
         with open(HUGGINGFACE_CACHE_TOKEN) as f:
             token = f.read().strip()
             if not token:
-                raise ValueError("Please provide a huggingface token. You can get a token by running `huggingface-cli login`")
+                raise ValueError("Please provide a huggingface token and save it in `~/.cache/huggingface/token`. You can get a token by running `huggingface-cli login`")
         huggingface_hub.login(token)
 
 
