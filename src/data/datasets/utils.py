@@ -37,7 +37,6 @@ import huggingface_hub
 __all__ = ['load_image_dataset']
 
 HUGGINGFACE_TOKEN = None
-HUGGINGFACE_TOKEN = "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"
 
 assert HUGGINGFACE_TOKEN is not None, 'Please set your HUGGINGFACE_TOKEN in EENN/data/datasets/utils.py'
 
