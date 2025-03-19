@@ -64,7 +64,7 @@ An example to train a ResNet model on CIFAR 10 with early exit, you can use the 
 ```bash
 python train_model.py --dataset cifar --num_classes 10 --test_split test --model resnet50 --ee 3 5 7 9 11 13 15 17 19 --pretrained <path_to_pretrained_regular_model> --epoch 10 --cuda --verbose
 ```
-
+description
 Two examples to use the trained model for inference are provided in `example.py`.
 
 ### Profiling model
@@ -78,6 +78,20 @@ The result will be saved in `<save_folder/profile_summary.json>`
 
 - `profile_summary['backbone_execution_time']['layer_name']`: processing time of each layer in backbone.
 - `profile_summary['gate_execution_time']['layer_name']`: processing time of layers in each gate.
+
+### Download Pretrained Model
+You can download the pretrained model from https://huggingface.co/chanyikchong/Early-Exit-Neural-Network or by using the following command:
+```bash
+python download_pretrained_model.py --save_dir <save_folder>
+```
+
+### Loading Pretrained Model
+You can load the pretrained model by using the following command:
+```python
+from src.nn.model import load_model
+
+model = load_model("model_folder")
+```
 
 ### Citation This Repository
 If you find this repository useful, please consider citing it:

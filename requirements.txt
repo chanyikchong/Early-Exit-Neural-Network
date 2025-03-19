@@ -4,7 +4,7 @@ tqdm
 
 numpy>=1.24.4
 pandas>=2.0.3
-timm
+timm==1.0.11
 
 # torch
 torch==2.0.1

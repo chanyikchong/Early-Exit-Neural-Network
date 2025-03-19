@@ -33,6 +33,7 @@ from collections import defaultdict
 from typing import List
 
 import torch.nn as nn
+import torchvision.transforms as T
 
 from ..modules import BaseModule
 
@@ -52,6 +53,29 @@ class BaseModel(BaseModule, metaclass=PosInitMeta):
         self._layer_readable_flag = False
         self.backbone = nn.ModuleList()
         self.feature_info = []
+        self._transform = None
+
+    @property
+    def transform(self):
+        if self._transform is None:
+            return None
+        elif isinstance(self._transform, T.Compose):
+            return self._transform
+        elif isinstance(self._transform, tuple):
+            if self.training:
+                return self._transform[0]
+            else:
+                return self._transform[1]
+        else:
+            raise ValueError("Invalid transform type")
+
+    @transform.setter
+    def transform(self, value):
+        if isinstance(value, T.Compose) or (
+                isinstance(value, tuple) and len(value) == 2 and all(isinstance(v, T.Compose) for v in value)):
+            self._transform = value
+        else:
+            raise ValueError("Invalid transform type")
 
     def __pos_init__(self, **kwargs):
         self.layer_time_flag = kwargs.get('layer_time_flag', False)

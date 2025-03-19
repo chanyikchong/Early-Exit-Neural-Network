@@ -162,3 +162,4 @@ cython_debug/
 #.idea/
 
 source/models/
+/upload_huggingface_model.py

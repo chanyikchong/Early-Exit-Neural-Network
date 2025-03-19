@@ -32,6 +32,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import torch
 import torchvision.transforms as T
 from timm.data.transforms_factory import transforms_imagenet_train, transforms_imagenet_eval
+import timm.data.transforms as TimT
 
 from .constants import *
 
@@ -140,6 +141,25 @@ class TransformFactory:
             "crop_mode (str default='center'): crop mode, possible options ['center', 'squash', 'border']\n"
         )
 
+    @staticmethod
+    def eval(transform: T.Compose):
+        eval_transforms = []
+
+        for t in transform.transforms:
+            if isinstance(t, (T.RandomResizedCrop, T.RandomHorizontalFlip,
+                              T.ColorJitter, T.RandomAffine, T.RandomRotation,
+                              T.RandomPerspective, T.RandomErasing, T.RandomApply)):
+                continue  # Skip augmentation transforms
+            elif isinstance(t, TimT.RandomResizedCropAndInterpolation):
+                eval_transforms.append(T.Resize(t.size, interpolation=t.interpolation))
+            elif isinstance(t, T.Resize):
+                eval_transforms.append(t)  # Keep deterministic resizing
+            elif isinstance(t, T.RandomResizedCrop):  # Convert RandomResizedCrop to Resize
+                eval_transforms.append(T.Resize(t.size))
+            else:
+                eval_transforms.append(t)  # Keep normalization, ToTensor, etc.
+
+        return T.Compose(eval_transforms)
 
 def to_rgb(image):
     if image.mode != 'RGB':
