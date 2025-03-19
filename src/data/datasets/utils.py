@@ -36,18 +36,20 @@ import huggingface_hub
 
 __all__ = ['load_image_dataset']
 
-HUGGINGFACE_TOKEN = None
-
-assert HUGGINGFACE_TOKEN is not None, 'Please set your HUGGINGFACE_TOKEN in EENN/data/datasets/utils.py'
-
 HUGGINGFACE_CACHE_TOKEN = os.path.join(os.path.expanduser('~'), '.cache', 'huggingface', 'token')
 
 
 def huggingface_login(huggingface_token=None):
     if not os.path.exists(HUGGINGFACE_CACHE_TOKEN):
         if huggingface_token is None:
-            huggingface_token = HUGGINGFACE_TOKEN
+            raise ValueError("Please provide a huggingface token. You can get a token by running `huggingface-cli login`")
         huggingface_hub.login(huggingface_token)
+    else:
+        with open(HUGGINGFACE_CACHE_TOKEN) as f:
+            token = f.read().strip()
+            if not token:
+                raise ValueError("Please provide a huggingface token. You can get a token by running `huggingface-cli login`")
+        huggingface_hub.login(token)
 
 
 def load_image_dataset(dataset_name, huggingface_token=None, split='test', streaming=True, cache_dir=None):
